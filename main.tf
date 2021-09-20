@@ -35,21 +35,21 @@ module "user" {
     name = var.name
 }
 
-# Cloud9
-resource "aws_cloudformation_stack" "cloud9" {
-    count = var.cloud9_count
-    
-    name = "${var.name}-${count.index}"
-
-    template_body = templatefile(
-        "/workspaces/terraform-interview/cloud9-stack.json",
-        {
-            resource_name = "apginterview"
-            name = "${var.name}-${count.index}"
-            count = count.index
-            subnet_id = module.network.public_subnet_ids[0][0]
-            owner_arn = var.owner_arn
-        }
-    )
+resource "aws_cloud9_environment_ec2" "environment" {
+  count                       = var.count
+  name                        = var.name
+  instance_type               = var.instance_type
+  automatic_stop_time_minutes = var.automatic_stop_time_minutes
+  description                 = var.description
+  owner_arn                   = var.owner_arn
+  subnet_id                   = var.subnet_id
+  tags = merge(
+    {
+      "NameCount" = var.enviroment_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, 
+        count.index + 1) : var.name
+    },
+    var.tags,
+  )
 }
+
 
