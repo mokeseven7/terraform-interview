@@ -1,3 +1,7 @@
-output "tfc_example_table_arn" {
-  value = aws_dynamodb_table.tfc_example_table.arn
+output "encrypted_password" {
+    value = module.user.encrypted_password
+}
+
+output "user" {
+    value = module.user.user
 }

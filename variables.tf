@@ -1,19 +1,22 @@
-variable "aws_region" {
-  type    = string
-  default = "us-west-1"
+variable "name" {
+    type = string
+    default = "cloud9-training-env-terraform"
 }
 
-variable "db_table_name" {
-  type    = string
-  default = "terraform-learn"
+variable "azs" {
+    default = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
-variable "db_read_capacity" {
-  type    = number
-  default = 1
+variable "member_count" {
+    type = number
+    description = "The number of accounts to be created"
 }
 
-variable "db_write_capacity" {
-  type    = number
-  default = 1
+variable "cloud9_count" {
+    type = number
+    description = "The number of cloud9 environemnts to be created"
+}
+
+variable "owner_arn" {
+    type = string
 }
